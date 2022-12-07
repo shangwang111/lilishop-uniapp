@@ -1,0 +1,194 @@
+
+.uni-top-1 {
+	margin-top: 5rpx;
+}
+
+.uni-top-2 {
+	margin-top: 10rpx;
+}
+
+.uni-top-3 {
+	margin-top: 15rpx;
+}
+
+.uni-top-4 {
+	margin-top: 20rpx;
+}
+
+@for $i from 1 through 140 {
+	.fs-#{$i} {
+		font-size: #{$i}rpx;
+	}
+	.mt-#{$i} {
+		margin-top: #{$i}rpx;
+	}
+	.mb-#{$i} {
+		margin-bottom: #{$i}rpx;
+	}
+	.pb-#{$i} {
+		padding-bottom: #{$i}rpx;
+	}
+	.pt-#{$i} {
+		padding-top: #{$i}rpx;
+	}
+}
+
+.break-all {
+	word-break: break-all;
+}
+
+@for $i from 5 through 30 {
+	.ml-#{$i} {
+		margin-left: #{$i}rpx;
+	}
+	
+	.mr-#{$i} {
+		margin-right: #{$i}rpx;
+	}
+}
+
+.split-line-1 {
+	width: 100%;
+	height: 1rpx;
+	background-color: $border-color-light;
+}
+
+.box-shadow-d {
+	box-shadow: 0px 4rpx 8rpx 0px rgba(0, 0, 0, 0.16);
+}
+
+.card-area {
+	margin: 20rpx 0 0 0;
+	background: #FFFFFF;
+	
+	.card-title {
+		padding: 0 30rpx;
+		font-size: 32rpx;
+		font-family: PingFangSC-Semibold, PingFang SC;
+		font-weight: 600;
+		color: #000000;
+		line-height: 96rpx;
+		border-bottom: 1rpx $border-color-light solid;
+	}
+	
+	.card-body {
+		padding: 20rpx 30rpx;
+	}
+}
+
+.d-flex {
+	display: flex;
+}
+
+.align-items-center {
+	align-items: center;
+}
+
+.justify-content-space-between {
+	justify-content: space-between;
+}
+
+.justify-content-center {
+	justify-content: center;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.flex-wrap-initial {
+	flex-wrap: initial;
+}
+
+
+.font-light {
+	color: $font-color-light;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.font-weight-700 {
+	font-weight: 700;
+}
+
+.font-weight-500 {
+	font-weight: 500;
+}
+
+.font-color-disabled {
+	color: $font-color-disabled;
+}
+
+.bar-border {
+	width: 100vw;
+	height: 20rpx;
+	z-index: 9;
+	background: linear-gradient(to bottom, #ffffffff 0%,  #9c9c9c55 100%);;
+}
+
+.text-align-justify {
+	text-align: justify;
+}
+
+.text-align-justify i {
+	width: 100%;
+	display: inline-block;
+}
+
+.card-area {
+	border-radius: 20rpx;
+	line-height: 1.8;
+	width: calc(100% - 40rpx);
+	
+	.label {
+		flex: 0 0 90rpx;
+		color: $font-color-base;
+	}
+	
+	.label-title {
+		flex: 0 0 140rpx;
+		color: $font-color-base;
+	}
+	
+	.count-into {
+		color: $uni-color-success;
+	}
+	
+	.count-danger {
+		color: $uni-color-error;
+		font-weight: 700;
+	}
+	
+	.badge {
+		padding: 0 10rpx;
+		line-height: 1.5;
+		color: #ffffff;
+		font-size: 20rpx;
+		border-radius: 10rpx;
+	}
+	
+	.badge-success {
+		background-color: $uni-color-success;
+	}
+	
+	.badge-warning {
+		background-color: $uni-color-warning;
+	}
+}
+
+.password-panel {
+			
+	.close {
+		position: absolute;
+		left: 0;
+		top: 10rpx;
+		
+		image {
+			padding: 30rpx 20rpx;
+			width: 40rpx;
+			height: 40rpx;
+		}
+	}
+}
