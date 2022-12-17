@@ -338,7 +338,10 @@
                     if(res.data.result) {
                       self.keyboardLevel = 0;
                     } else {
-                      self.keyboardLevel = 1;
+                      uni.navigateTo({
+                        url: '/pages/mine/set/securityCenter/editPayPassword'
+                      })
+                      //self.keyboardLevel = 1;
                     }
                     self.showKeyboard = true;
                     self.secondPassword='';

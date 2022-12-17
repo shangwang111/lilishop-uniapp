@@ -643,7 +643,8 @@ export default {
               title: "登录成功!",
               icon: "none",
             });
-            self.getCheckPassword();
+            whetherNavigate();
+            //self.getCheckPassword();
           } else {
             uni.switchTab({
               url: "/pages/tabbar/home/index",
