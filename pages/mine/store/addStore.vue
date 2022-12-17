@@ -36,11 +36,11 @@
 				<u-form-item class="invitationPhone" label="邀请人" label-width="130" prop="invitationPhone">
 					<u-input v-model="invitationLabel" type="select" clearable placeholder="默认为选择地址的服务商"
 						@click="showSel()" />
-					<u-select v-model="showSelect" :list="invitationList" @confirm="examinationType" />
+					<u-select v-model="showSelect" :list="invitationList" @confirm="examinationType" :default-value="subJectArr"/>
 				</u-form-item>
 
 				<u-form-item class="detailAddress" label="店铺照片" label-width="130" prop="storeLogo">
-					<view v-if="id == null || form.storeDisable === 'REFUSED' ">
+					<view v-if="id == null">
 						<view class="images-view">
 							<u-upload :header=" { accessToken: storage.getAccessToken() }" :action="action" width="150"
 								@on-uploaded="onUploaded" :max-count="1" :show-progress="false"></u-upload>
@@ -97,6 +97,7 @@
 		},
 		data() {
 			return {
+        subJectArr:[0],
 				systemScopes: [],
 				lightColor: this.$lightColor, //高亮颜色
 				mapFlage: false, // 地图选择开
@@ -373,6 +374,8 @@
 				getStoreBaseInfo(option.id).then((res) => {
 					const params = res.data.result;
 					this.$set(this, "form", params);
+          this.subJectArr[0] = res.data.result.invitationPhone;
+
 					uni.hideLoading();
 				});
 			}
@@ -431,17 +434,18 @@
 	}
 
 	.updateBtn {
-		height: 70rpx;
-		line-height: 70rpx;
-		text-align: center;
-		font-size: 30rpx;
-		background: $aider-light-color;
-		color: #fff;
-		width: 85%;
-		margin: 40rpx auto 0 auto;
-		border-radius: 30rpx;
-		float: left;
-		margin-left: 65rpx;
+    float: left;
+    margin-left: 50rpx;
+    width: calc(90% - 20rpx);
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    border-radius: 40rpx;
+    text-align: center;
+    background: #FF573E;
 	}
 
 	.backBtn {
