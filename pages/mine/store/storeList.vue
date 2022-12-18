@@ -9,6 +9,7 @@
 				<view class="basic" @click="addStore(item.id)">
 					<text>{{ item.storeName }}</text>
 					<text>{{ item.memberName }}</text>
+
 					<text class="pass_default" v-if="item.storeDisable ==='OPEN' ">审核通过</text>
 					<text class="default"
 						  v-if="item.storeDisable ==='APPLYING' && userInfo.member.serviceProvider ==='SERVICE_PROVIDER' && serviceProviderCode === item.storeAddressIdPath.split(',')[2] "
@@ -23,6 +24,8 @@
 						<div class="region">
 							<span>{{ item.storeAddressDetail }}</span>
 						</div>
+            <div style="float: right;color:#FF573E;" ><u-icon name="edit-pen"></u-icon>修改</div>
+
 					</view>
 				</view>
 			</view>
@@ -231,6 +234,7 @@ export default {
 			color: #666;
 
 			.basic {
+        height:190rpx;
 				padding: 30rpx;
 				line-height: 1.5em;
 
