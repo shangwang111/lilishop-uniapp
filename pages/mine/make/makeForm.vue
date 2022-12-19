@@ -123,7 +123,7 @@
 			}
 		},
 		watch: {
-			storeIndex(oldVal, newVal) {
+			storeIndex(newVal, oldVal) {
 				this.form.merId = this.storeIds[newVal];
 				this.form.merName = this.storeNames[newVal];
 				console.log(this.form)

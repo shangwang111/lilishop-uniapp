@@ -24,8 +24,7 @@
 						<div class="region">
 							<span>{{ item.storeAddressDetail }}</span>
 						</div>
-            <div style="float: right;color:#FF573E;" ><u-icon name="edit-pen"></u-icon>修改</div>
-
+           <!-- <div style="float: right;color:#FF573E;" ><u-icon name="edit-pen"></u-icon>修改</div>-->
 					</view>
 				</view>
 			</view>
