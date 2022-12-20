@@ -56,7 +56,7 @@ export function getGoodsRelated(params) {
  */
 export function getGoodsList(params) {
   return http.request({
-    url: "/goods/goods/es",
+    url: "/goods/goods/skuList",
     method: Method.GET,
     params,
   });

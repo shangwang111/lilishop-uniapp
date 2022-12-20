@@ -273,13 +273,13 @@
 						// "navigationStyle": "custom"
 					}
 				},
-				// {
-				// 	"path": "address/addressManage",
-				// 	"style": {
-				// 		"navigationBarTitleText": "地址管理"
-				// 		// "navigationStyle": "custom"
-				// 	}
-				// }
+				 {
+				 	"path": "address/addressManage",
+				 	"style": {
+				 		"navigationBarTitleText": "地址管理"
+				 		// "navigationStyle": "custom"
+				 	}
+				 },
 				{
 					"path": "member/storeMember",
 					"style": {
@@ -589,6 +589,23 @@
 						//"navigationStyle": "custom"
 					}
 				}
+			,{
+					"path" : "goodsList",
+					"style" :
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+
+				} ,{
+					"path" : "goods",
+					"style" :
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+
+				}
 			]
 
 		},
@@ -725,6 +742,13 @@
 					"path": "orderDetail",
 					"style": {
 						"navigationBarTitleText": "订单详情"
+						// "navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "fillorder",
+					"style": {
+						"navigationBarTitleText": "填写订单"
 						// "navigationStyle": "custom"
 					}
 				},

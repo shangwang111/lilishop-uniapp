@@ -5,7 +5,7 @@
 // 开发环境
 const dev = {
   common: "https://wangzix.com/common-api",
-  buyer: "https://wangzix.com/buyer-api",
+  buyer: "http://localhost:8888",
 };
 // 生产环境
 const prod = {

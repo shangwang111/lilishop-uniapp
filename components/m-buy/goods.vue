@@ -101,14 +101,13 @@
 					<!-- 数量 -->
 					<view class="goods-skus-number">
 						<view class="view-class-title">数量</view>
-						
 						<u-input style='text-align: right;' v-model="num" type="number"  />
 					</view>
 				</scroll-view>
 				<!-- 按钮 -->
 				<view class="btns">
-					<view class="box-btn card" v-if="buyType != 'PINTUAN' && goodsDetail.goodsType != 'VIRTUAL_GOODS'"
-						@click="addToCartOrBuy('cart')">加入购物车</view>
+					<!-- <view class="box-btn card" v-if="buyType != 'PINTUAN' && goodsDetail.goodsType != 'VIRTUAL_GOODS'"
+						@click="addToCartOrBuy('cart')">加入购物车</view> -->
 					<view class="box-btn buy" @click="addToCartOrBuy('buy')">立即购买</view>
 				</view>
 			</view>

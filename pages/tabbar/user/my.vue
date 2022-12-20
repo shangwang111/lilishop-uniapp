@@ -71,11 +71,11 @@
           </div>
           <view>待评价</view>
         </view>
-        <view class="order-item" @click="navigateTo('/pages/order/afterSales/afterSales')">
+        <view class="order-item" @click="navigateTo('/pages/mine/address/addressManage')">
           <div class="bag bag5">
             <u-icon name="server-fill" size="35" color="#fff"></u-icon>
           </div>
-          <view style="width: 50px;">售后服务</view>
+          <view style="width:90rpx;">地址管理</view>
         </view>
       </view>
     </div>

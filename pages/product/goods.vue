@@ -108,11 +108,11 @@
           <GoodsSwiper id="main1" :res="imgList" />
 
           <!-- 促销活动条 -->
-          <PromotionAssembleLayout
+          <!-- <PromotionAssembleLayout
             v-if="PromotionList"
             :detail="goodsDetail"
             :res="PromotionList"
-          />
+          /> -->
 
           <view class="card-box top-radius-0" id="main2">
             <!-- 活动不显示价钱 -->
@@ -121,7 +121,7 @@
                 <view class="desc-bold">
                   {{ goodsDetail.goodsName || "" }}
                 </view>
-                <view class="favorite" @click="clickFavorite(goodsDetail.id)">
+                <!-- <view class="favorite" @click="clickFavorite(goodsDetail.id)">
                   <u-icon
                     size="30"
                     :color="favorite ? '#f2270c' : '#262626'"
@@ -131,7 +131,7 @@
                   <view :style="{ color: favorite ? '#f2270c' : '#262626' }">{{
                     favorite ? "已收藏" : "收藏"
                   }}</view>
-                </view>
+                </view> -->
               </view>
               <!-- 商品描述 -->
               <view class="-goods-desc">
@@ -164,11 +164,11 @@
                     ¥<span class="price">0 </span>.00
                   </view>
 
-                  <view class="icons share" @click="shareChange()">
+                  <!--<view class="icons share" @click="shareChange()">
                     <u-icon size="30" name="share-fill"></u-icon>
                     <view>分享</view>
-                  </view>
-                  <view class="icons" @click="clickFavorite(goodsDetail.id)">
+                  </view> -->
+                  <!-- <view class="icons" @click="clickFavorite(goodsDetail.id)">
                     <u-icon
                       size="30"
                       :color="favorite ? '#f2270c' : '#262626'"
@@ -177,7 +177,7 @@
                     <view :style="{ color: favorite ? '#f2270c' : '#262626' }">{{
                       favorite ? "已收藏" : "收藏"
                     }}</view>
-                  </view>
+                  </view> -->
                 </view>
                 <view class="-goods-name desc-bold">
                   {{ goodsDetail.goodsName || "" }}
@@ -189,7 +189,7 @@
             </view>
           </view>
 
-          <view class="card-box">
+          <!-- <view class="card-box">
             <view class="card-flex" @click="shutMask(1)">
               <view class="card-title"> 促销 </view>
               <view class="card-content">
@@ -200,7 +200,7 @@
                 <u-icon name="more-dot-fill"></u-icon>
               </view>
             </view>
-          </view>
+          </view> -->
 
           <!-- 拼团用户列表 -->
           <PromotionAssembleListLayout
@@ -243,12 +243,12 @@
           <Evaluation id="main5" :goodsDetail="goodsDetail" />
 
           <!-- 店铺推荐 -->
-          <storeLayout
+  <!--        <storeLayout
             id="main7"
             :storeDetail="storeDetail"
             :goodsDetail="goodsDetail"
             :res="recommendList"
-          />
+          /> -->
 
           <!-- 宝贝详情 -->
           <GoodsIntro
@@ -265,7 +265,7 @@
       </scroll-view>
 
       <view class="page-bottom mp-iphonex-bottom" id="pageBottom">
-        <view class="icon-btn">
+        <!-- <view class="icon-btn">
           <view class="icon-btn-item" @click="navigateToStore(goodsDetail.storeId)">
             <u-icon size="34" class="red" name="home-fill"></u-icon>
             <view class="red icon-btn-name">店铺</view>
@@ -279,16 +279,16 @@
             <view class="icon-btn-name">购物车</view>
             <view v-if="nums && nums > 0" class="num-icon">{{ nums }}</view>
           </view>
-        </view>
+        </view> -->
         <!-- 正常结算页面 -->
         <view class="detail-btn" v-if="!isGroup">
-          <view
+          <!-- <view
             class="to-store-car to-store-btn"
             v-if="goodsDetail.goodsType != 'VIRTUAL_GOODS'"
             @click="shutMask(4)"
           >
-            加入购物车</view
-          >
+            加入购物车
+					</view> -->
           <view class="to-buy to-store-btn" @click="shutMask(4, 'buy')">立即购买</view>
           <view class="to-store-car to-store-btn" v-if="startTimer">暂未开始</view>
         </view>
@@ -427,11 +427,6 @@ export default {
         {
           title: "首页",
           icon: "home-fill",
-          ___type: "other",
-        },
-        {
-          title: "购物车",
-          icon: "bag-fill",
           ___type: "other",
         },
         {
@@ -838,11 +833,11 @@ export default {
      * 获取店铺信息
      */
     getStoreBaseInfoFun(id) {
-      API_store.getStoreBaseInfo(id).then((res) => {
-        if (res.data.success) {
-          this.storeDetail = res.data.result;
-        }
-      });
+      // API_store.getStoreBaseInfo(id).then((res) => {
+      //   if (res.data.success) {
+      //     this.storeDetail = res.data.result;
+      //   }
+      // });
     },
 
     /**

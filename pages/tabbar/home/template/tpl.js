@@ -1,7 +1,6 @@
 /** 配置楼层模块的跳转 */
 export function modelNavigateTo(item) {
   let val = item.url;
-console.log(item)
   switch (val.___type) {
     case "goods":
       uni.navigateTo({
@@ -48,6 +47,11 @@ console.log(item)
     case "serviceCenter":
       uni.navigateTo({
         url: "/pages/mine/help/serviceCenter",
+      });
+      break;
+    case "shoppingMall":
+      uni.navigateTo({
+        url: "/pages/product/goodsList",
       });
       break;
     case "regionalAgent":
