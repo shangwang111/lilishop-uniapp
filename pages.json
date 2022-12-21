@@ -591,18 +591,20 @@
 				}
 			,{
 					"path" : "goodsList",
-					"style" :
-					{
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false
+					"style": {
+						"navigationBarTitleText": "商品列表",
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "black",
+						"enablePullDownRefresh": true
 					}
 
 				} ,{
 					"path" : "goods",
-					"style" :
-					{
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false
+					"style": {
+						"navigationBarTitleText": "商品详细",
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "black",
+						"enablePullDownRefresh": true
 					}
 
 				}

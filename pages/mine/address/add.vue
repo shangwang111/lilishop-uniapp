@@ -39,11 +39,12 @@
 </template>
 <script>
 import { addAddress, editAddress, getAddressDetail } from "@/api/address.js";
+import gkcity from "@/components/m-city/m-city.vue";
 import uniMap from "./uniMap";
 import permision from "@/js_sdk/wa-permission/permission.js";
 export default {
   components: {
-    "m-city": '',
+    "m-city": gkcity,
     uniMap,
   },
   onShow() {
@@ -200,7 +201,9 @@ export default {
 
     // 显示三级地址联动
     showPicker() {
+      console.log('1111111111111111')
       this.$refs.cityPicker.show();
+      console.log('22222')
     },
   },
   mounted() {},

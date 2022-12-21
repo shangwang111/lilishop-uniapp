@@ -256,7 +256,6 @@
             :res="goodsDetail"
             :goodsParams="goodsParams"
             :goodsId="goodsDetail.goodsId"
-            v-if="goodsDetail.id"
           />
 
           <!-- 宝贝推荐 -->
@@ -644,7 +643,7 @@ export default {
       // 这里请求获取到页面数据  解析数据
 
       let response = await getGoods(id, goodsId);
-
+      
       if (!response.data.success) {
         setTimeout(() => {
           uni.navigateBack();
@@ -701,6 +700,7 @@ export default {
       }
       // 获取IM 需要的话使用
       // this.getIMDetailMethods();
+      console.log(this.goodsDetail)
     },
 
     async getIMDetailMethods() {
