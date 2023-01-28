@@ -59,6 +59,7 @@
 			},
 			filterType(val) {
 				if(val == 0) return '邀请收益';
+				if(val == 9) return '奖励收益';
 				return '空投收益';
 			}
 		},
