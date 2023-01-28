@@ -1,8 +1,5 @@
 <template>
   <view class="serach">
-    <view class="left-box" @tap="onClickLeft">
-      <u-icon name="arrow-left" size="40" color="#666"></u-icon>
-    </view>
     <view class="content" :style="{ 'border-radius': radius + 'px' }">
       <!-- HM修改 增加进入输入状态的点击范围 -->
       <view class="content-box" :class="{ center: mode === 2 }">

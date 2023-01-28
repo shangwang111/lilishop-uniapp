@@ -75,7 +75,7 @@
           <div class="bag bag5">
             <u-icon name="server-fill" size="35" color="#fff"></u-icon>
           </div>
-          <view style="width:90rpx;">地址管理</view>
+          <view style="width:90rpx;">地址</view>
         </view>
       </view>
     </div>

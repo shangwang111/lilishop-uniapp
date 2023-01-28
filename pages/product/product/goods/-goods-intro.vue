@@ -10,14 +10,14 @@
             class="empty"
             text="暂无商品介绍"
             mode="data"
-            v-if="!res.mobileIntro"
+            v-if="!mobileIntro"
           ></u-empty>
           <u-parse
             class="vhtml"
             :lazy-load="true"
             :use-cache="true"
             :show-with-animation="true"
-            :html="res.mobileIntro"
+            :html="mobileIntro"
           ></u-parse>
         </view>
       </view>
@@ -26,7 +26,10 @@
 </template>
 
 <script>
-
+export default {
+  props: ["mobileIntro"],
+};
+</script>
 
 <style lang="scss" scoped>
 @import "../product.scss";

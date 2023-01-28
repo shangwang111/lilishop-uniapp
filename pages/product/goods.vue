@@ -253,7 +253,7 @@
           <!-- 宝贝详情 -->
           <GoodsIntro
             id="main9"
-            :res="goodsDetail"
+            :mobileIntro="goodsDetail.mobileIntro"
             :goodsParams="goodsParams"
             :goodsId="goodsDetail.goodsId"
           />
@@ -354,11 +354,11 @@
           :pointDetail="pointDetail"
 					:wholesaleList="wholesaleList"
           @handleClickSku="selectSku"
-          :buyMask="buyMask"
-        />
-      </view>
+        <!--:buyMask="buyMask"-->
+      />
     </view>
-  </div>
+  </view>
+</div>
 </template>
 
 <script>
@@ -389,373 +389,372 @@ import shares from "@/components/m-share/index"; //分享
 import popups from "@/components/popups/popups"; //气泡框
 import setup from "./product/popup/popup";
 export default {
-  components: {
-    popups,
-    shares,
-    PromotionLayout,
-    PromotionDetailsLayout,
-    PromotionAssembleLayout,
-    PromotionAssembleListLayout,
-    PromotionCoupon,
-    GoodsIntro,
-    GoodsRecommend,
-    storeLayout,
-    Evaluation,
-    GoodsSwiper,
-    popupGoods,
-    popupAddress,
-  },
-  data() {
-    return {
-      setup,
-      promotionShow: false, //弹窗开关
-      // #ifdef H5
-      navbarListX: 110, //导航栏列表栏x轴
-      navbarListY: 80, //导航栏列表栏y轴
-      // #endif
-      // #ifdef MP-WEIXIN
-      navbarListX: 100, //导航栏列表栏x轴
-      navbarListY: 140, //导航栏列表栏y轴
-      // #endif
-      // #ifdef APP-PLUS
-      navbarListX: 120, //导航栏列表栏x轴
-      navbarListY: 170, //导航栏列表栏y轴
-      // #endif
-      navbarListData: [
-        //导航栏列表栏数据
-        {
-          title: "首页",
-          icon: "home-fill",
-          ___type: "other",
-        },
-        {
-          title: "搜索",
-          icon: "search",
-          ___type: "category",
-        },
-        {
-          title: "个人中心",
-          icon: "account-fill",
-          ___type: "other",
-        },
-      ],
-      popupsSwitch: false, //导航栏列表栏开关
-      enableShare: false,
-      selectedGoods: "", //选择的商品规格昵称
-      isGroup: false, // 是否是拼团活动
-      isSeckill:false, // 是否秒杀活动
-      pointDetail: "", // 是否是积分商品
-      assemble: "", //拼团的sku
-      navbarOnlyBack: {
-        background: "transparent",
-      },
-      navbar: {
-        background: "#fff",
-      },
-
-      productRefHeight: "",
-      header: {
-        top: 0,
-        height: 50,
-      },
-      goodsParams: [], // 商品参数
-      headerFlag: false, //顶部导航显示与否
-      headerList: [
-        //顶部导航文字按照规则来 详情全局搜索
-        {
-          text: "商品",
-          id: "1",
-        },
-        {
-          text: "评价",
-          id: "2",
-        },
-        {
-          text: "详情",
-          id: "3",
-        },
-        {
-          text: "推荐",
-          id: "4",
-        },
-      ],
-      tabScrollTop: null,
-      scrollArr: [],
-      scrollId: "1",
-
-      scrollFlag: true,
-      current: "1", //当前显示的轮播图页
-
-      goodsDetail: {}, //商品数据
-      goodsSpec: "", //规格数据
-      imgList: [], //轮播图数据
-      favorite: false, //收藏与否flag
-      recommendList: [], //推荐列表
-      // maskFlag: false, //模态显示与否
-      goodsInfo: false, //商品介绍弹窗
-      addressFlag: false, //配送地址弹窗
-      buyMask: false, //添加购物车直接购买，查看已选 弹窗
-
-      num: 1, //添加到购物车的数量
-
-      skuId: "", //
-      storeDetail: "", //店铺基本信息,
-
-      // 店铺信息
-      storeParams: {
-        pageNumber: 1,
-        pageSize: 10,
-      },
-
-      likeGoodsList: "", //相似商品列表
-      PromotionList: "", //活动,促销，列表
-      specList: [],
-      skusCombination: [],
-      selectedSpec: [],
-      nums: 0,
-      delivery: "",
-
-      exchange: {},
-      productId: 0,
-
-      startTimer: false, //未开启 是false
-
-      routerVal: "",
-      IMLink: "", // IM地址
-			wholesaleList:[]
-    };
-  },
-
-  computed: {
-	// udesk IM 
-    IM() {
-      return this.IMLink + this.storeDetail.merchantEuid;
-    },
-  },
-
-  watch: {
-    isGroup(val) {
-      if (val) {
-        let timer = setInterval(() => {
-          this.$refs.popupGoods.buyType = "PINTUAN";
-          clearInterval(timer);
-        }, 100);
-      } else {
-        this.$refs.popupGoods.buyType = "";
-      }
-    },
-  },
-  mounted() {
-    const { windowHeight } = uni.getSystemInfoSync();
-    let bottomHeight = 0;
-    let topHeight = 0;
-    uni.getSystemInfo({
-      success: function (res) {
-        // res - 各种参数
-        let bottom = uni.createSelectorQuery().select(".page-bottom");
-        bottom
-          .boundingClientRect(function (data) {
-            if (data && data.height) {
-              //data - 各种参数
-              bottomHeight = data.height; // 获取元素宽度
-            }
-          })
-          .exec();
-        let top = uni.createSelectorQuery().select(".header");
-        top
-          .boundingClientRect(function (data) {
-            if (data && data.height) {
-              //data - 各种参数
-              topHeight = data.height; // 获取元素宽度
-            }
-          })
-          .exec();
-      },
-    });
-
-    this.productRefHeight = windowHeight - bottomHeight + "px";
-  },
-  async onLoad(options) {
-    this.routerVal = options;
-    // #ifdef MP-WEIXIN
-    // 小程序默认分享
-    uni.showShareMenu({
-      withShareTicket: true,
-      menus: ["shareAppMessage", "shareTimeline"],
-    });
+components: {
+  popups,
+  shares,
+  PromotionLayout,
+  PromotionDetailsLayout,
+  PromotionAssembleLayout,
+  PromotionAssembleListLayout,
+  PromotionCoupon,
+  GoodsIntro,
+  GoodsRecommend,
+  storeLayout,
+  Evaluation,
+  GoodsSwiper,
+  popupGoods,
+  popupAddress,
+},
+data() {
+  return {
+    setup,
+    promotionShow: false, //弹窗开关
+    // #ifdef H5
+    navbarListX: 110, //导航栏列表栏x轴
+    navbarListY: 80, //导航栏列表栏y轴
     // #endif
+    // #ifdef MP-WEIXIN
+    navbarListX: 100, //导航栏列表栏x轴
+    navbarListY: 140, //导航栏列表栏y轴
+    // #endif
+    // #ifdef APP-PLUS
+    navbarListX: 120, //导航栏列表栏x轴
+    navbarListY: 170, //导航栏列表栏y轴
+    // #endif
+    navbarListData: [
+      //导航栏列表栏数据
+      {
+        title: "首页",
+        icon: "home-fill",
+        ___type: "other",
+      },
+      {
+        title: "搜索",
+        icon: "search",
+        ___type: "category",
+      },
+      {
+        title: "个人中心",
+        icon: "account-fill",
+        ___type: "other",
+      },
+    ],
+    popupsSwitch: false, //导航栏列表栏开关
+    enableShare: false,
+    selectedGoods: "", //选择的商品规格昵称
+    isGroup: false, // 是否是拼团活动
+    isSeckill:false, // 是否秒杀活动
+    pointDetail: "", // 是否是积分商品
+    assemble: "", //拼团的sku
+    navbarOnlyBack: {
+      background: "transparent",
+    },
+    navbar: {
+      background: "#fff",
+    },
+
+    productRefHeight: "",
+    header: {
+      top: 0,
+      height: 50,
+    },
+    goodsParams: [], // 商品参数
+    headerFlag: false, //顶部导航显示与否
+    headerList: [
+      //顶部导航文字按照规则来 详情全局搜索
+      {
+        text: "商品",
+        id: "1",
+      },
+      {
+        text: "评价",
+        id: "2",
+      },
+      {
+        text: "详情",
+        id: "3",
+      },
+      {
+        text: "推荐",
+        id: "4",
+      },
+    ],
+    tabScrollTop: null,
+    scrollArr: [],
+    scrollId: "1",
+    scrollFlag: true,
+    current: "1", //当前显示的轮播图页
+
+    goodsDetail: {}, //商品数据
+    goodsSpec: "", //规格数据
+    imgList: [], //轮播图数据
+    favorite: false, //收藏与否flag
+    recommendList: [], //推荐列表
+    // maskFlag: false, //模态显示与否
+    goodsInfo: false, //商品介绍弹窗
+    addressFlag: false, //配送地址弹窗
+    //buyMask: false, //添加购物车直接购买，查看已选 弹窗
+
+    num: 1, //添加到购物车的数量
+
+    skuId: "", //
+    storeDetail: "", //店铺基本信息,
+
+    // 店铺信息
+    storeParams: {
+      pageNumber: 1,
+      pageSize: 10,
+    },
+
+    likeGoodsList: "", //相似商品列表
+    PromotionList: "", //活动,促销，列表
+    specList: [],
+    skusCombination: [],
+    selectedSpec: [],
+    nums: 0,
+    delivery: "",
+
+    exchange: {},
+    productId: 0,
+
+    startTimer: false, //未开启 是false
+
+    routerVal: "",
+    IMLink: "", // IM地址
+    wholesaleList:[]
+  };
+},
+
+computed: {
+// udesk IM
+  IM() {
+    return this.IMLink + this.storeDetail.merchantEuid;
   },
-  async onShow() {
-    this.goodsDetail = {};
-    //如果有参数ids说明事分销短连接，需要获取参数
-    if (this.routerVal.scene) {
-      getMpScene(this.routerVal.scene).then((res) => {
-        if (res.data.success) {
-          let data = res.data.result.split(","); // skuId,goodsId,distributionId
-          this.init(data[0], data[1], data[2]);
-        }
-      });
+},
+
+watch: {
+  isGroup(val) {
+    if (val) {
+      let timer = setInterval(() => {
+        this.$refs.popupGoods.buyType = "PINTUAN";
+        clearInterval(timer);
+      }, 100);
     } else {
-      this.init(this.routerVal.id, this.routerVal.goodsId, this.routerVal.distributionId);
+      this.$refs.popupGoods.buyType = "";
     }
   },
+},
+mounted() {
+  const { windowHeight } = uni.getSystemInfoSync();
+  let bottomHeight = 0;
+  let topHeight = 0;
+  uni.getSystemInfo({
+    success: function (res) {
+      // res - 各种参数
+      let bottom = uni.createSelectorQuery().select(".page-bottom");
+      bottom
+        .boundingClientRect(function (data) {
+          if (data && data.height) {
+            //data - 各种参数
+            bottomHeight = data.height; // 获取元素宽度
+          }
+        })
+        .exec();
+      let top = uni.createSelectorQuery().select(".header");
+      top
+        .boundingClientRect(function (data) {
+          if (data && data.height) {
+            //data - 各种参数
+            topHeight = data.height; // 获取元素宽度
+          }
+        })
+        .exec();
+    },
+  });
+
+  this.productRefHeight = windowHeight - bottomHeight + "px";
+},
+async onLoad(options) {
+  this.routerVal = options;
   // #ifdef MP-WEIXIN
-  onShareAppMessage(res) {
-    return {
-      path: this.share(),
-      title: `[好友推荐]${this.goodsDetail.goodsName}`,
-      imageUrl: this.goodsDetail.goodsGalleryList[0],
-    };
-  },
+  // 小程序默认分享
+  uni.showShareMenu({
+    withShareTicket: true,
+    menus: ["shareAppMessage", "shareTimeline"],
+  });
   // #endif
-  methods: {
-    share() {
-      return `/pages/product/goods?id=${this.routerVal.id}&goodsId=${this.routerVal.goodsId}`;
-    },
-    /**
-     * 导航栏列表栏
-     */
-    handleNavbarList(val) {
-      modelNavigateTo({ url: val });
-    },
-
-    /**
-     * 循环出当前促销是否为空
-     */
-    emptyPromotion() {
-      if (
-        this.PromotionList == "" ||
-        this.PromotionList == null ||
-        this.PromotionList == []
-      ) {
-        return true;
-      }
-    },
-    selectSku(idObj) {
-      this.init(idObj.skuId, idObj.goodsId);
-    },
-    /**
-     * 初始化信息
-     */
-    async init(id, goodsId, distributionId = "") {
-      this.isGroup = false; //初始化拼团
-      this.productId = id; // skuId
-      // 这里请求获取到页面数据  解析数据
-
-      let response = await getGoods(id, goodsId);
-      
-      if (!response.data.success) {
-        setTimeout(() => {
-          uni.navigateBack();
-        }, 500);
-      }
-      // 这里是绑定分销员
-      if (distributionId || this.$store.state.distributionId) {
-        let disResult = await getGoodsDistribution(distributionId);
-        if (!disResult.data.success || disResult.statusCode == 403) {
-          this.$store.state.distributionId = distributionId;
-        }
-      }
-      /**商品信息以及规格信息存储 */
-      this.goodsDetail = response.data.result.data;
-      this.wholesaleList = response.data.result.wholesaleList;
-      this.goodsSpec = response.data.result.specs;
-      this.PromotionList = response.data.result.promotionMap;
-      this.goodsParams = response.data.result.goodsParamsDTOList || [];
-
-      // 判断是否拼团活动或者积分商品 如果有则显示拼团活动信息
-      this.PromotionList &&
-        Object.keys(this.PromotionList).forEach((item) => {
-          // 拼团商品
-          if (item.indexOf("PINTUAN") == 0) {
-            this.isGroup = true;
-          }
-          // 积分
-          if (item.indexOf("POINTS_GOODS") == 0) {
-            this.pointDetail = this.PromotionList[item];
-          }
-          // 秒杀
-          if (item.indexOf("SECKILL") == 0) {
-            this.isSeckill = true
-          }
-        });
-      // 轮播图
-      this.imgList = this.goodsDetail.goodsGalleryList;
-
-      // 获取店铺基本信息
-      this.getStoreBaseInfoFun(this.goodsDetail.storeId);
-
-      // 获取购物车
-      this.cartCount();
-
-      // 获取店铺推荐商品
-      this.getStoreRecommend();
-
-      // 获取商品列表
-      this.getOtherLikeGoods();
-      // 获取商品是否已被收藏 如果未登录不获取
-
-      if (this.$options.filters.isLogin("auth")) {
-        this.getGoodsCollectionFun(this.goodsDetail.id);
-      }
-      // 获取IM 需要的话使用
-      // this.getIMDetailMethods();
-      console.log(this.goodsDetail)
-    },
-
-    async getIMDetailMethods() {
-      let res = await getIMDetail();
+},
+async onShow() {
+  this.goodsDetail = {};
+  //如果有参数ids说明事分销短连接，需要获取参数
+  if (this.routerVal.scene) {
+    getMpScene(this.routerVal.scene).then((res) => {
       if (res.data.success) {
-        this.IMLink = res.data.result;
+        let data = res.data.result.split(","); // skuId,goodsId,distributionId
+        this.init(data[0], data[1], data[2]);
       }
-    },
+    });
+  } else {
+    this.init(this.routerVal.id, this.routerVal.goodsId, this.routerVal.distributionId);
+  }
+},
+// #ifdef MP-WEIXIN
+onShareAppMessage(res) {
+  return {
+    path: this.share(),
+    title: `[好友推荐]${this.goodsDetail.goodsName}`,
+    imageUrl: this.goodsDetail.goodsGalleryList[0],
+  };
+},
+// #endif
+methods: {
+  share() {
+    return `/pages/product/goods?id=${this.routerVal.id}&goodsId=${this.routerVal.goodsId}`;
+  },
+  /**
+   * 导航栏列表栏
+   */
+  handleNavbarList(val) {
+    modelNavigateTo({ url: val });
+  },
 
-    linkMsgDetail() {
-      // lili 基础客服
-	
-	  uni.navigateTo({
-		url: `/pages/tabbar/home/web-view?IM=${this.storeDetail.storeId}`,
-	  });
-		
-		// udesk 代码  
-		// if (this.storeDetail.merchantEuid) {
-		//   uni.navigateTo({
-		//     url: `/pages/tabbar/home/web-view?src=${this.IM}`,
-		//   });
-		// }
-		  
-		  
-        // 客服 云智服代码 
-        // // #ifdef MP-WEIXIN
-        // const params = {
-        //   storeName: this.storeDetail.storeName,
-        //   goodsName: this.goodsDetail.goodsName,
-        //   goodsId: this.goodsDetail.goodsId,
-        //   goodsImg: this.goodsDetail.thumbnail,
-        //   price: this.goodsDetail.promotionPrice || this.goodsDetail.price,
-        //   // originalPrice: this.goodsDetail.original || this.goodsDetail.price,
-        //   uuid: storage.getUuid(),
-        //   token: storage.getAccessToken(),
-        //   sign: this.storeDetail.yzfSign,
-        //   mpSign: this.storeDetail.yzfMpSign,
-        // };
-        // uni.navigateTo({
-        //   url:
-        //     "/pages/product/customerservice/index?params=" +
-        //     encodeURIComponent(JSON.stringify(params)),
-        // });
-        // // #endif
-        // // #ifndef MP-WEIXIN
-        // const sign = this.storeDetail.yzfSign;
-        // uni.navigateTo({
-        //   url:
-        //     "/pages/tabbar/home/web-view?src=https://yzf.qq.com/xv/web/static/chat/index.html?sign=" +
-        //     sign,
-        // });
-        // // #endif
-    
-    },
-    // 格式化金钱  1999 --> [1999,00]
+  /**
+   * 循环出当前促销是否为空
+   */
+  emptyPromotion() {
+    if (
+      this.PromotionList == "" ||
+      this.PromotionList == null ||
+      this.PromotionList == []
+    ) {
+      return true;
+    }
+  },
+  selectSku(idObj) {
+    this.init(idObj.skuId, idObj.goodsId);
+  },
+  /**
+   * 初始化信息
+   */
+  async init(id, goodsId, distributionId = "") {
+    this.isGroup = false; //初始化拼团
+    this.productId = id; // skuId
+    // 这里请求获取到页面数据  解析数据
+
+    let response = await getGoods(id, goodsId);
+
+    if (!response.data.success) {
+      setTimeout(() => {
+        uni.navigateBack();
+      }, 500);
+    }
+    // 这里是绑定分销员
+    if (distributionId || this.$store.state.distributionId) {
+      let disResult = await getGoodsDistribution(distributionId);
+      if (!disResult.data.success || disResult.statusCode == 403) {
+        this.$store.state.distributionId = distributionId;
+      }
+    }
+    /**商品信息以及规格信息存储 */
+    this.goodsDetail = response.data.result.data;
+    this.wholesaleList = response.data.result.wholesaleList;
+    this.goodsSpec = response.data.result.specs;
+    this.PromotionList = response.data.result.promotionMap;
+    this.goodsParams = response.data.result.goodsParamsDTOList || [];
+
+    // 判断是否拼团活动或者积分商品 如果有则显示拼团活动信息
+    this.PromotionList &&
+      Object.keys(this.PromotionList).forEach((item) => {
+        // 拼团商品
+        if (item.indexOf("PINTUAN") == 0) {
+          this.isGroup = true;
+        }
+        // 积分
+        if (item.indexOf("POINTS_GOODS") == 0) {
+          this.pointDetail = this.PromotionList[item];
+        }
+        // 秒杀
+        if (item.indexOf("SECKILL") == 0) {
+          this.isSeckill = true
+        }
+      });
+    // 轮播图
+    this.imgList = this.goodsDetail.goodsGalleryList;
+
+    // 获取店铺基本信息
+    this.getStoreBaseInfoFun(this.goodsDetail.storeId);
+
+    // 获取购物车
+    this.cartCount();
+
+    // 获取店铺推荐商品
+    this.getStoreRecommend();
+
+    // 获取商品列表
+    this.getOtherLikeGoods();
+    // 获取商品是否已被收藏 如果未登录不获取
+
+    if (this.$options.filters.isLogin("auth")) {
+      this.getGoodsCollectionFun(this.goodsDetail.id);
+    }
+    // 获取IM 需要的话使用
+    // this.getIMDetailMethods();
+    console.log(this.goodsDetail)
+  },
+
+  async getIMDetailMethods() {
+    let res = await getIMDetail();
+    if (res.data.success) {
+      this.IMLink = res.data.result;
+    }
+  },
+
+  linkMsgDetail() {
+    // lili 基础客服
+
+  uni.navigateTo({
+  url: `/pages/tabbar/home/web-view?IM=${this.storeDetail.storeId}`,
+  });
+
+  // udesk 代码
+  // if (this.storeDetail.merchantEuid) {
+  //   uni.navigateTo({
+  //     url: `/pages/tabbar/home/web-view?src=${this.IM}`,
+  //   });
+  // }
+
+
+      // 客服 云智服代码
+      // // #ifdef MP-WEIXIN
+      // const params = {
+      //   storeName: this.storeDetail.storeName,
+      //   goodsName: this.goodsDetail.goodsName,
+      //   goodsId: this.goodsDetail.goodsId,
+      //   goodsImg: this.goodsDetail.thumbnail,
+      //   price: this.goodsDetail.promotionPrice || this.goodsDetail.price,
+      //   // originalPrice: this.goodsDetail.original || this.goodsDetail.price,
+      //   uuid: storage.getUuid(),
+      //   token: storage.getAccessToken(),
+      //   sign: this.storeDetail.yzfSign,
+      //   mpSign: this.storeDetail.yzfMpSign,
+      // };
+      // uni.navigateTo({
+      //   url:
+      //     "/pages/product/customerservice/index?params=" +
+      //     encodeURIComponent(JSON.stringify(params)),
+      // });
+      // // #endif
+      // // #ifndef MP-WEIXIN
+      // const sign = this.storeDetail.yzfSign;
+      // uni.navigateTo({
+      //   url:
+      //     "/pages/tabbar/home/web-view?src=https://yzf.qq.com/xv/web/static/chat/index.html?sign=" +
+      //     sign,
+      // });
+      // // #endif
+
+  },
+  // 格式化金钱  1999 --> [1999,00]
     formatPrice(val) {
       if (typeof val == "undefined") {
         return val;
@@ -783,7 +782,7 @@ export default {
      * 商品规格子级关闭回调
      */
     closePopupBuy(val) {
-      this.buyMask = val;
+      //this.buyMask = val;
       // this.maskFlag = false;
     },
 
@@ -928,7 +927,7 @@ export default {
      */
     shutMask(flag, buyFlag, type) {
       this.promotionShow = false;
-      this.buyMask = false;
+      //this.buyMask = false;
       this.addressFlag = false;
       if (flag) {
         switch (flag) {
@@ -942,7 +941,7 @@ export default {
           case 4: //添加购物车直接购买，查看已选 弹窗
             // 判断是否是一个规格
 
-            this.buyMask = true;
+            //this.buyMask = true;
             if (buyFlag == "PINTUAN") {
               if (type.orderSn) {
                 this.$refs.popupGoods.parentOrder = type;
