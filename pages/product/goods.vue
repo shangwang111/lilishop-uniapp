@@ -354,7 +354,7 @@
           :pointDetail="pointDetail"
 					:wholesaleList="wholesaleList"
           @handleClickSku="selectSku"
-        <!--:buyMask="buyMask"-->
+          :buyMask="buyMask"
       />
     </view>
   </view>
@@ -493,7 +493,7 @@ data() {
     // maskFlag: false, //模态显示与否
     goodsInfo: false, //商品介绍弹窗
     addressFlag: false, //配送地址弹窗
-    //buyMask: false, //添加购物车直接购买，查看已选 弹窗
+    buyMask: false, //添加购物车直接购买，查看已选 弹窗
 
     num: 1, //添加到购物车的数量
 
@@ -782,7 +782,7 @@ methods: {
      * 商品规格子级关闭回调
      */
     closePopupBuy(val) {
-      //this.buyMask = val;
+      this.buyMask = val;
       // this.maskFlag = false;
     },
 
@@ -927,7 +927,7 @@ methods: {
      */
     shutMask(flag, buyFlag, type) {
       this.promotionShow = false;
-      //this.buyMask = false;
+      this.buyMask = false;
       this.addressFlag = false;
       if (flag) {
         switch (flag) {
@@ -941,7 +941,7 @@ methods: {
           case 4: //添加购物车直接购买，查看已选 弹窗
             // 判断是否是一个规格
 
-            //this.buyMask = true;
+            this.buyMask = true;
             if (buyFlag == "PINTUAN") {
               if (type.orderSn) {
                 this.$refs.popupGoods.parentOrder = type;
