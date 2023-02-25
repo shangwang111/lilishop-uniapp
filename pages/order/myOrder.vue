@@ -416,11 +416,11 @@ export default {
     pay(val) {
       if (val.sn) {
         // #ifdef MP-WEIXIN
-        new LiLiWXPay({
-          sn: val.sn,
-          price: val.flowPrice,
-          orderType: "ORDER",
-        }).pay();
+        // new LiLiWXPay({
+        //   sn: val.sn,
+        //   price: val.flowPrice,
+        //   orderType: "ORDER",
+        // }).pay();
         // #endif
         // #ifndef MP-WEIXIN
         uni.navigateTo({

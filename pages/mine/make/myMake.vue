@@ -25,6 +25,10 @@
 							<view class="title">{{ item.merName }}</view>
 							<view>{{ item.monetary }}</view>
 						</view>
+            <view class="fs-30 d-flex justify-content-space-between" :class="index>0 ? 'mt-20' : ''">
+              <view class="title"></view>
+              <view>{{ item.surrenderPrice/item.wantPrice | filterData}}</view>
+            </view>
 						<view class="mt-20 font-light d-flex justify-content-space-between">
 							<view>{{ item.createTime }}</view>
 							<view>{{ item.vipPhone }}</view>
@@ -44,7 +48,20 @@
 <script>
 	import { getPointsData, getUserInfo,getMemberPointSum } from "@/api/members.js";
 	import { queryMakeAccount } from "@/api/mine-make.js";
+  let getFloat = function(number, n) {
+    n = n ? parseInt(n) : 0;
+    if(n <= 0) {
+      return Math.round(number);
+    }
+    number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n); //四舍五入
+    return number;
+  };
 	export default {
+    filters: {
+      filterData(val) {
+        return getFloat(val, 8);
+      }
+    },
 		data() {
 			return {
 				list: [], //积分数据集合
@@ -111,7 +128,6 @@
 					}
 				});
 			},
-			
 			handleAdd() {
 				// uni.showToast({
 				// 	icon:"none",

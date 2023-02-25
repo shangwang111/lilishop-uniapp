@@ -337,45 +337,17 @@
         <!-- #endif -->
       </div>
     </div>
-    <u-keyboard class="password-panel" @change="onChange" ref="uKeyboard" v-model="showKeyboard" @backspace="onBackspace" mode="number" :dot-enabled="false" :tooltip="false" default="">
-      <view class="mt-40 mb-40 text-center" style="text-align: center;">
-        {{ keyboardTitle }}
-      </view>
-      <view class="close" @click="handleClose">
-        <image src="/static/icons/close.png" mode=""></image>
-      </view>
-      <view v-if="keyboardLevel == 0">
-        <view class="mt-30 text-center fs-28">本次购物需要</view>
-        <view class="mt-15 text-center">
-          <text class="fs-48 font-weight-500" style="margin-right: 10rpx;">
-            {{ ssd }}
-          </text>
-          <text>SSD</text>
-        </view>
-      </view>
 
-
-      <u-message-input class="mt-30" mode="box" :maxlength="6" :dot-fill="true" v-model="secondPassword" :disabled-keyboard="true" @finish="finish"></u-message-input>
-    </u-keyboard>
   </div>
 </template>
 <script>
-import { md5 } from '@/utils/md5.js'
 import * as API_Trade from "@/api/trade";
 import * as API_Address from "@/api/address";
 import * as API_Order from "@/api/order";
 import invoices from "@/pages/order/invoice/setInvoice";
-import { queryConfigureByType } from "@/api/mine-common.js";
 import {checkPassword, paymentPassword } from "@/api/login";
 import LiLiWXPay from "@/js_sdk/lili-pay/wx-pay.js";
-let getFloat = function(number, n) {
-  n = n ? parseInt(n) : 0;
-  if(n <= 0) {
-    return Math.round(number);
-  }
-  number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n); //四舍五入
-  return number;
-};
+
 export default {
   onLoad: function (val) {
     this.routerVal = val;
@@ -384,20 +356,6 @@ export default {
     invoices,
   },
 
-  watch: {
-
-    keyboardLevel(newVal, oldVal) {
-      if(newVal == 0) {
-        this.keyboardTitle = "请输入密码"
-      }
-      else if(newVal == 1) {
-        this.keyboardTitle = "设置密码"
-      }
-      else if(newVal == 2) {
-        this.keyboardTitle = "确认密码"
-      }
-    },
-  },
   data() {
     return {
       invoiceFlag: false, //开票开关
@@ -439,21 +397,6 @@ export default {
       password2: null,
       unitPrice: 0,
     };
-  },
-  computed: {
-    ssd() {
-      queryConfigureByType({
-        'type': 'unitPrice'
-      }).then((res) => {
-        if (res.data.success) {
-          this.unitPrice = res.data.result;
-        }
-      })
-      if(this.unitPrice > 0) {
-        return getFloat(parseFloat(this.orderMessage.priceDetailDTO.billPrice) / parseFloat(this.unitPrice), 8);
-      }
-      return 0;
-    }
   },
   filters: {
     /**
@@ -538,19 +481,6 @@ export default {
           this.shippingFlag = false;
           this.getOrderList();
         }
-      }
-    },
-    onChange(val) {
-      if (this.secondPassword.length < 6) {
-        this.secondPassword += val;
-      }
-      if (this.secondPassword.length >= 6) {
-        this.finish();
-      }
-    },
-    onBackspace(e) {
-      if (this.secondPassword.length > 0) {
-        this.secondPassword = this.secondPassword.substring(0, this.secondPassword.length - 1);
       }
     },
     // 跳转到店铺
@@ -689,36 +619,15 @@ export default {
                 url: "/pages/order/myOrder?status=0",
               });
             } else {
-
-              // 执行确认后的操作
-              uni.showLoading({
-                title: "加载中...",
-              });
-              checkPassword().then((res) => {
-                uni.hideLoading();
-                if (res.data.success) {
-                  if(res.data.result) {
-                    this.keyboardLevel = 0;
-                  } else {
-                    uni.navigateTo({
-                      url: '/pages/mine/set/securityCenter/editPayPassword'
-                    })
-
-                    //self.keyboardLevel = 1;
-                  }
-                  this.showKeyboard = true;
-                  this.secondPassword='';
-                }
-              });
               // #ifdef MP-WEIXIN
               // 微信小程序中点击创建订单直接开始支付
               //this.pay(res.data.result.sn);
               // #endif
 
               // #ifndef MP-WEIXIN
-              //this.navigateTo(
-              //  `/pages/cart/payment/payOrder?trade_sn=${res.data.result.sn}`
-              //);
+              this.navigateTo(
+                `/pages/cart/payment/payOrder?trade_sn=${res.data.result.sn}`
+              );
               // #endif
             }
           } else {
@@ -756,21 +665,6 @@ export default {
       });
     },
 
-  finish() {
-    self.showKeyboard = false;
-    self.form.secondPassword = md5(self.secondPassword);
-    self.form.wantPrice = self.unitPrice;
-    uni.showLoading({
-      title: "正在提交...",
-    });
-
-  },
-  handleClose() {
-    this.showKeyboard = false;
-      uni.redirectTo({
-        url: "/pages/order/myOrder?status=0",
-      });
-  },
     // 获取结算参数
     getOrderList() {
       this.notSupportFreight = [];

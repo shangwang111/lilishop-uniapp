@@ -296,8 +296,8 @@
 				}else if(this.form.business==1 && this.form.salesVolume > this.ssd){
 					this.showMsg('卖单数量不能大于拥有的SSD数量');
 					return false
-				}else if(!this.form.price || this.form.price <= 0 || ((this.form.price > (this.unitPrice * 1.1) ))){
-					this.showMsg('价格范围不能超过当日推荐价格上限的 10%');
+				}else if(!this.form.price || this.form.price <= 0 || ((this.form.price > (this.unitPrice * 1.1) || this.form.price < (this.unitPrice * 0.9) ))){
+					this.showMsg('价格范围不能超过当日推荐价格上下的 10%');
 					return false
 				}else if(this.form.business==1 && (!this.form.bankNo && !this.form.alipayCollectionCodeUrl && !this.form.wxCollectionCodeUrl)){
 					this.showMsg('银行卡号、支付宝收款码、微信收款码至少填写一个');

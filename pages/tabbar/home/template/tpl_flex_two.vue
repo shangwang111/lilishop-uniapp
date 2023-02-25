@@ -9,14 +9,16 @@
 				<div class="flex-content">
 					<div class="item item-1">
 						<view>
-							<view class="fs-52 font-weight-500" style="color:#d41a1a">{{ todayCount }}</view>
+              <view class="fs-52 font-weight-500" style="color:#d41a1a" v-if="xhlFlg">{{ todayCount }}</view>
+              <view class="fs-52 font-weight-500" style="color:#d41a1a" v-else>********</view>
 							<view class="fs-28 mb-10 font-color-disabled" style="margin-top: 3px">SSD销毁总量</view>
 						</view>
 					</div>
 					<span class="line-span" style=""></span>
 					<div class="item item-2">
 						<view>
-							<view class="fs-52 font-weight-500" style="color:#72c5b3">{{ yesterdayCount }}</view>
+              <view class="fs-52 font-weight-500" style="color:#72c5b3" v-if="xhlFlg">{{ yesterdayCount }}</view>
+              <view class="fs-52 font-weight-500" style="color:#72c5b3" v-else>******</view>
 							<view class="fs-28 mb-10 font-color-disabled" style="margin-top: 3px">今日销毁量</view>
 						</view>
 					</div>
@@ -52,7 +54,8 @@
 		data() {
 			return {
 				todayCount: 0,
-				yesterdayCount: 0
+				yesterdayCount: 0,
+        xhlFlg: false
 			};
 		},
 		mounted() {
@@ -66,6 +69,7 @@
 						let data = res.data.result;
 						self.todayCount = getFloat(data.sum, 4);
 						self.yesterdayCount = getFloat(data.yesterdayCount, 4);
+            self.xhlFlg = data.xhlFlg;
 					}
 				});
 			},

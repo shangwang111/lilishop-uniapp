@@ -590,7 +590,7 @@
 					}
 				}
 			,{
-					"path" : "goodsList",
+					"path" : "",
 					"style": {
 						"navigationBarTitleText": "商品列表",
 						"navigationStyle": "custom", // 隐藏系统导航栏
@@ -719,6 +719,45 @@
 						"navigationBarTitleText": "积分商城"
 
 
+					}
+				}
+
+			]
+
+		},
+		{
+			"root": "pages/cart",
+			"pages": [{
+				"path": "coupon/myCoupon",
+				"style": {
+					"navigationBarTitleText": "我的优惠券",
+					"app-plus": {
+						"bounce": "coupon/none"
+
+					}
+				}
+			},
+
+				{
+					"path": "payment/payOrder",
+					"style": {
+						"navigationBarTitleText": "支付订单",
+						"app-plus": {
+							"popGesture": "none" //禁止侧滑退出
+
+						}
+					}
+				},
+				{
+					"path": "payment/success",
+					"style": {
+						"navigationBarTitleText": "支付成功",
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white",
+						"app-plus": {
+							"popGesture": "none", //禁止侧滑退出
+							"titleNView": false
+						}
 					}
 				}
 
