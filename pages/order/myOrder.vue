@@ -107,7 +107,7 @@
                     class="cancel-btn"
                     shape="circle"
                     size="mini"
-                    v-if="order.allowOperationVO.cancel"
+                    v-if="order.allowOperationVO.pay && order.allowOperationVO.cancel"
                     @click="onCancel(order.sn)"
                   >
                     取消订单
@@ -134,7 +134,7 @@
                   >
                     确认收货
                   </u-button>
-                  <u-button
+                  <!--!<u-button
                     ripple
                     shape="circle"
                     class="cancel-btn"
@@ -143,7 +143,7 @@
                     @click="applyService(order)"
                   >
                     退款/售后
-                  </u-button>
+                  </u-button>-->
                   <!-- TODO 后续完善 -->
                   <!-- <u-button ripple shape="circle" class="rebuy-btn" size="mini" v-if="
                       order.orderStatus === 'CANCELLED' ||
@@ -416,6 +416,9 @@ export default {
     pay(val) {
       if (val.sn) {
         // #ifdef MP-WEIXIN
+        uni.navigateTo({
+          url: "/pages/cart/payment/payOrder?order_sn=" + val.sn,
+        });
         // new LiLiWXPay({
         //   sn: val.sn,
         //   price: val.flowPrice,

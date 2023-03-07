@@ -20,7 +20,7 @@
       <div class="payItem">支付方式</div>
       <div class="payItem" v-for="(item, index) in payList" :key="index">
         <u-row class="row">
-          <div class="col1" @click="awaitPay('WALLET', index)" size="100" style="text-align:left;">
+          <div class="col1" @click="handleSubmit" size="100" style="text-align:left;">
             <!--<div v-if="item == 'ALIPAY'">
               <u-icon class="method_icon" name="zhifubao-circle-fill" color="#008ffa" size="80"></u-icon>
               <span class="method_name">支付宝</span>
@@ -29,12 +29,12 @@
               <u-icon class="method_icon" name="weixin-circle-fill" color="#00c98b" size="80"></u-icon>
               <span class="method_name">微信</span>
             </div>-->
-            <div v-if="item == 'WECHAT'">
+            <div v-if="item == 'WALLET'">
               <u-icon class="method_icon" name="red-packet-fill" color="#dd6161" size="80"></u-icon>
               <span class="method_name">SSD支付(需要支付SSD：{{ssd}})</span>
             </div>
           </div>
-          <div class="col3" @click="awaitPay(item)" textAlign="right">
+          <div class="col3" @click="handleSubmit" textAlign="right">
             <u-icon size="26" color="#b1b1b1" name="arrow-right"></u-icon>
           </div>
         </u-row>
@@ -58,13 +58,14 @@
       </view>
 
 
-      <u-message-input class="mt-30" mode="box" :maxlength="6" :dot-fill="true" v-model="secondPassword" :disabled-keyboard="true" @finish="awaitPay(item)"></u-message-input>
+      <u-message-input class="mt-30" mode="box" :maxlength="6" :dot-fill="true" v-model="secondPassword" :disabled-keyboard="true" @finish="finish"></u-message-input>
     </u-keyboard>
   </div>
 </template>
 <script>
 	import * as API_Trade from "@/api/trade";
   import { queryConfigureByType } from "@/api/mine-common.js";
+  import {checkPassword, paymentPassword } from "@/api/login";
   import { md5 } from '@/utils/md5.js'
 	import {payCallback} from '@/api/members'
 
@@ -284,9 +285,37 @@
 					}
 				});
 			},
-
+      finish() {
+          this.showKeyboard = false;
+          uni.showLoading({
+            title: "正在提交...",
+          });
+          this.pay('WALLET', md5(this.secondPassword))
+      },
       handleClose() {
         this.showKeyboard = false;
+      },
+      handleSubmit() {
+        let self = this;
+        // 执行确认后的操作
+        uni.showLoading({
+          title: "加载中...",
+        });
+        checkPassword().then((res) => {
+          uni.hideLoading();
+          if (res.data.success) {
+            if(res.data.result) {
+              self.keyboardLevel = 0;
+            } else {
+              uni.navigateTo({
+                url: '/pages/mine/set/securityCenter/editPayPassword'
+              })
+              //self.keyboardLevel = 1;
+            }
+            self.showKeyboard = true;
+            self.secondPassword='';
+          }
+        });
       },
 			awaitPay(payment){
 				this.$u.throttle(()=>{
@@ -295,7 +324,7 @@
 			},
 
 			//订单支付
-			async pay(payment) {
+			async pay(payment, paymentPass) {
 				
 				// 支付编号
 				const sn = this.sn;
@@ -307,8 +336,8 @@
 					sn,
 					orderType,
 					clientType,
+          paymentPass,
 				};
-
 				//支付方式 WECHAT/ALIPAY
 				const paymentMethod = payment;
 				// 客户端类型 APP/NATIVE/JSAPI/H5
@@ -318,7 +347,7 @@
 				  title: "正在唤起支付...",
 				  mask:true
 				});
-				
+
 				// #ifdef APP-PLUS
 				//APP pay
 				// 初始化支付签名
@@ -337,7 +366,6 @@
 						let payForm = signXml.data.result;
 						
 						let paymentType = paymentMethod === "WECHAT" ? "wxpay" : "alipay";
-						
 						if(paymentMethod === "WALLET"){
 							uni.showToast({
 								icon: "none",
@@ -370,7 +398,6 @@
 				);
 				//APP pay
 				// #endif
-
 				//#ifdef H5
 				//H5 pay
 				await API_Trade.initiatePay(paymentMethod, paymentClient, params).then(

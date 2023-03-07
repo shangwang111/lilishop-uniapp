@@ -87,7 +87,6 @@
 		{
 			"path": "pages/tabbar/screen/tpl_video",
 			"style": {
-
 			}
 		}
 	    ,{
@@ -590,7 +589,7 @@
 					}
 				}
 			,{
-					"path" : "",
+					"path" : "goodsList",
 					"style": {
 						"navigationBarTitleText": "商品列表",
 						"navigationStyle": "custom", // 隐藏系统导航栏
@@ -790,6 +789,28 @@
 					"path": "fillorder",
 					"style": {
 						"navigationBarTitleText": "填写订单"
+						// "navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "evaluate/evaluateDetail",
+					"style": {
+						"navigationBarTitleText": "评价详情"
+						// "navigationStyle": "custom"
+					}
+				},
+
+				{
+					"path": "evaluate/releaseEvaluate",
+					"style": {
+						"navigationBarTitleText": "发布评价"
+						// "navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "evaluate/myEvaluate",
+					"style": {
+						"navigationBarTitleText": "我的评价"
 						// "navigationStyle": "custom"
 					}
 				},

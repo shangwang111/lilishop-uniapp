@@ -329,11 +329,11 @@
         >
       </div>
       <div class="navRiv" @click="createTradeFun()">
-        <!-- #ifndef MP-WEIXIN -->
+        <!-- #ifdef MP-WEIXIN -->
         <div class="tabbar-right">提交订单</div>
         <!-- #endif -->
         <!-- #ifdef MP-WEIXIN -->
-        <div class="tabbar-right">微信支付</div>
+        <!--<div class="tabbar-right">微信支付</div>-->
         <!-- #endif -->
       </div>
     </div>
@@ -624,7 +624,7 @@ export default {
               //this.pay(res.data.result.sn);
               // #endif
 
-              // #ifndef MP-WEIXIN
+              // #ifdef MP-WEIXIN
               this.navigateTo(
                 `/pages/cart/payment/payOrder?trade_sn=${res.data.result.sn}`
               );

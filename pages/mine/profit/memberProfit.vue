@@ -14,17 +14,19 @@
 						<text v-if="item.orderId === null">空投收益暂无订单号</text> 
 						<text v-else>{{ item.orderId }}</text> 
 					</view>
-					<view class="count-danger fs-28">{{ item.quantity }}个</view>
+
 				</view>
-				
+
 				<view class="card-body break-all">
 					<view class="d-flex">
 						<text class="label-title">收益类型：</text>
 						<text>{{ item.incomeType|filterType }}</text>
+            <view style="margin-left:35px" class="count-danger fs-28">{{ item.quantity }}个</view>
 					</view>
+
 					<view class="d-flex">
 						<text class="label-title">收益时间：</text>
-						<text>{{ item.creationTime|filterDateTime }}</text>
+						<text>{{ item.creationTime }}</text>
 					</view>
 				</view>
 			</view>
@@ -59,9 +61,11 @@
 			},
 			filterType(val) {
 				if(val == 0) return '邀请收益';
-				if(val == 9) return '奖励收益';
+				if(val == 3) return '商城消费';
+        if(val == 4) return '商品收益';
+        if(val == 9) return '奖励收益';
 				return '空投收益';
-			}
+			},
 		},
 		data() {
 			return {
