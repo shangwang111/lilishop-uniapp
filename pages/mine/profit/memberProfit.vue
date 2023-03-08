@@ -63,6 +63,7 @@
 				if(val == 0) return '邀请收益';
 				if(val == 3) return '商城消费';
         if(val == 4) return '商品收益';
+        if(val == 5) return '平台手续费';
         if(val == 9) return '奖励收益';
 				return '空投收益';
 			},

@@ -30,7 +30,7 @@
 			<view class="split-line-1"></view>
 			<view class="item">
 				<view class="label-input">价格</view>
-				<input class="form-text" type="digit" v-model="form.price" placeholder="请输入价格"/>
+				<input class="form-text" type="digit" v-model="form.price" disabled placeholder="请输入价格"/>
 			</view>
 
 			
@@ -173,6 +173,7 @@
 				}).then((res) => {
 					if (res.data.success) {
 						self.unitPrice = res.data.result;
+						self.form.price= res.data.result;
 					} 
 				})
 			},
