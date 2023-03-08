@@ -4,7 +4,7 @@
     <div class="address-box" @click="clickToAddress()">
       <div class="user-box flex">
         <div class="flex-8">
-          <div v-if="!address.id">请选择地址</div>
+          <div v-if="!address.id">添加寄货地址</div>
           <div v-else>
             <div class="user-address">
               <!-- 省市区 -->
