@@ -9,7 +9,7 @@
         <image :src="userInfo.face || '/static/missing-face.png'"></image>
       </view>
       <view class="head-2" v-if="userInfo.id">
-     <!--   <view class="user-name">{{ userInfo.username }}</view> -->
+
         <view class="user-name">{{ userInfo.member.mobile }}</view>
 		
 		<view v-for="(item, index) in userInfo.member.roles" :key="index">
@@ -19,6 +19,7 @@
 			   </view>
 		  </view>
 		</view>
+        <view class="user-name">{{ userInfo.member.createTime }}</view>
       </view>
       <view class="head-2" v-else>
         <view class="user-name">登录/注册</view>
