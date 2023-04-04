@@ -38,9 +38,9 @@
 			}
 		},
 		{
-			"path": "pages/tabbar/category/category",
+			"path": "pages/product/goodsLbList",
 			"style": {
-				"navigationBarTitleText": "分类",
+				"navigationBarTitleText": "礼包",
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "black",
 				"disableScroll": true,
@@ -864,13 +864,12 @@
 				"selectedIconPath": "static/tabbar/store-s.png",
 				"text": "商铺分类"
 			},
-
-			// {
-			// 	"pagePath": "pages/tabbar/category/category",
-			// 	"iconPath": "static/tabbar/category.png",
-			// 	"selectedIconPath": "static/tabbar/category-s.png",
-			// 	"text": "分类"
-			// },
+			 {
+			 	"pagePath": "pages/product/goodsLbList",
+			 	"iconPath": "static/tabbar/category.png",
+			 	"selectedIconPath": "static/tabbar/category-s.png",
+			 	"text": "礼包"
+			 },
 			{
 				"pagePath": "pages/tabbar/user/my",
 				"iconPath": "static/tabbar/mine.png",

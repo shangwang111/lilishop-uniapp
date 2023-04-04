@@ -238,24 +238,18 @@ export default {
       params: {
         pageNumber: 1,
         pageSize: 10,
-        // sort: 'grade_asc',
-      
         keyword: "",
 				marketEnable: "UPPER",
-        salesModel: "RETAIL",
+        salesModel: "LBSALE",
       },
       minPrice: "",
       maxPrice: "",
       sortParams: {
         pageNumber: 1,
         pageSize: 10,
-
-        // price: "", //价格,示例值(10_30)
-        // prop: "", //属性:参数名_参数值@参数名_参数值,示例值(屏幕类型_LED@屏幕尺寸_15英寸)
-        // brandId:"", //品牌,可以多选 品牌Id@品牌Id@品牌Id
         categoryId: "",
-				marketEnable: "UPPER",
-        salesModel: "RETAIL",
+        marketEnable: "UPPER",
+        salesModel: "LBSALE",
       },
 
       routerVal: "",
@@ -445,6 +439,8 @@ export default {
         pageNumber: 1,
         pageSize: 10,
         categoryId: this.routerVal.category || "",
+        marketEnable: "UPPER",
+        salesModel: "LBSALE",
       };
       this.sortPopup = false;
       this.initSortGoods();
@@ -454,6 +450,8 @@ export default {
         pageNumber: 1,
         pageSize: 10,
         categoryId: this.routerVal.category || "",
+        marketEnable: "UPPER",
+        salesModel: "LBSALE",
       };
       this.goodsList = [];
       this.loadData();
